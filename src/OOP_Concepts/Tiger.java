@@ -8,6 +8,7 @@ public class Tiger extends Animal {
         System.out.println("tigers eat meat");
         System.out.println("master branchdeki");
         System.out.println("yeni satır yeni için");
+        System.out.println("git için");
     }
 
 }
