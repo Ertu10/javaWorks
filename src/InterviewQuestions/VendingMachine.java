@@ -1,6 +1,5 @@
 package InterviewQuestions;
 
-import javax.sound.midi.Soundbank;
 import java.util.*;
 
 public class VendingMachine {
@@ -14,6 +13,7 @@ public class VendingMachine {
         products.put("Water", 40);
         products.put("Crisp", 65);
         products.put("Chocolate", 75);
+        products.put("Albeni", 50);
 
         moneys = new ArrayList<>();
         moneys.add("0");
@@ -34,33 +34,34 @@ public class VendingMachine {
         Scanner scan = new Scanner(System.in);
         boolean sit = true;
         while (sit) {
-            if (check(scan.next(), coins)) {
+            check(scan.next(), coins);
 
-            }
+
         }
 
     }
 
-    public static boolean check(String money, int[] coins) {
+    public static boolean check(String input, int[] coins) {
 
-        if (money.equalsIgnoreCase("cancel")) {
-            cancel();//reset all thing and refunding total money that added by user.
+        if (input.equalsIgnoreCase("cancel")) {
+            cancel();//reset all thing and refunding total input that added by user.
             return false;
-        }else if (products.containsKey(money)){
-            selectedProduct = money;
-            System.out.println("this product is "+ products.get(money)+"cent");
+        }else if (products.containsKey(input)){
+            selectedProduct = input;
+            System.out.println("this product is "+ products.get(input)+"cent");
             return false;
         }
-        else if(money.equalsIgnoreCase("buy")){
+        else if(input.equalsIgnoreCase("buy")){
             buy();
             return false;
         }
         boolean test = false;
         for (int coin : coins) {
             try {
-                if (Integer.parseInt(money) == coin) {
+                if (Integer.parseInt(input) == coin) {
                     test = true;
-                    moneys.add(money);
+                    moneys.add(input);
+                    System.out.println("your balance: " + calculateMoney(moneys));
                     break;
                 } else {
                     test = false;
@@ -72,7 +73,7 @@ public class VendingMachine {
 
         }
         if (test == false)
-            System.out.println("Please add just valid money");
+            System.out.println("Please add just valid input");
         return test;
     }
 
@@ -88,10 +89,11 @@ public class VendingMachine {
         if (calculateMoney(moneys)>=products.get(selectedProduct)){
             System.out.println("Bon appetit!!! Change is "+ (totalMoney- price)+ "cent");
             moneys.clear();moneys.add("0");
+            selectedProduct = null;
 
 
         }else{
-            System.out.println("your money is not enough for this product please add");
+            System.out.println("your money is not enough for this product please add "+ (products.get(selectedProduct)-calculateMoney(moneys)));
         }
     }
 
